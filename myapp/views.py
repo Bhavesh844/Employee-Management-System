@@ -27,9 +27,17 @@ def signup(request):
         ps2=request.POST.get('password2')
         if ps1!=ps2:
             return render(request,'emp/signup.html',{'username':us,'ps1':ps1,'ps2':ps2,'error':'Password must be same'})
-        my_user=User.objects.create_user(username=us,password=ps1,is_active=True)
-        print(my_user.username)
-        return redirect('/signin')
+        
+        try : 
+            User.objects.get(username=us)
+            return render(request,'emp/signup.html',{'username':us,'error':'Username is not available'})
+                
+        except User.DoesNotExist:
+            User.objects.create_user(username=us,password=ps1,is_active=True)
+            return render(request, 'emp/signup.html', {'success': 'Account successfully created. Please sign in.'})
+            
+        except Exception as e:
+            print('Unexpected error has occur : ',e)
     return render(request,'emp/signup.html')
 
 def mylogout(request):  
