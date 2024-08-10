@@ -10,7 +10,7 @@ from django.contrib import messages
 # @login_required(login_url='/protected_page')
 def emp_list(request):
     sup = request.user.is_superuser
-    print(sup)
+    print(request.build_absolute_uri()) 
     emps=emp.objects.all() 
     return render(request,'emp/home.html',{'emps':emps,'sup':sup})
 
@@ -32,9 +32,7 @@ def add_emp(request):
     
         e=emp(name=emp_name,phone=emp_phone,eid=emp_name[:3]+emp_phone[:3],working=emp_work,department=emp_dept,address=emp_add)
         e.save()
-        print(type(e.eid))
         return redirect('/emp/home')
-
     return render(request,'emp/add_emp.html')
     
 @login_required(login_url='/protected_page')

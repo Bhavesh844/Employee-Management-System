@@ -9,7 +9,7 @@
 
   <body>
     {% include 'emp/navbar.html' %}
-    <div class="container">
+    <div class="container mb-5">
       <div class="row justify-content-center mt-5">
         <div class="col-sm-6 row-gap-3">
           <h1 class="text-muted">Sign Up</h1>
@@ -31,13 +31,11 @@
               </div>
               {% if ps1 != ps2 or error %}
                 <div class="mb-3">
-                  <h3>{{ error }}</h3>
+                  <div class="alert alert-danger">{{ error }}</div>
                 </div>
               {% endif %}
               {% if success %}
-                <div class="alert alert-success d-flex">{{ success }}
-                    <a href="/signin/" class="ms-3 btn btn-outline-success  ">Sign In</a>
-                </div>
+                    <div class="alert alert-success">{{ success }} <a href="/signin/" class="ms-3 btn btn-light btn-outline-success">Sign In </a></div>
               {% endif %}
               <button type="submit" class="btn btn-primary">Signup</button>
               <a href="/signin/" class="ms-3">I already have an account</a>

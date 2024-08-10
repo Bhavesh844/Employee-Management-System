@@ -35,14 +35,14 @@ def signup(request):
         except User.DoesNotExist:
             User.objects.create_user(username=us,password=ps1,is_active=True)
             return render(request, 'emp/signup.html', {'success': 'Account successfully created. Please sign in.'})
-            
+
         except Exception as e:
             print('Unexpected error has occur : ',e)
     return render(request,'emp/signup.html')
 
-def mylogout(request):  
+def mylogout(request,p):  
     logout(request)
-    return redirect('/signin')     
+    return redirect(p)     
 
 def protected_page(request):
     return render(request,'protected_page.html')

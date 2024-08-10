@@ -14,7 +14,7 @@
           <a class="nav-link" href="/emp/testimonial">Testimonial</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/emp/testimonial/viewtesti">View</a>
+          <a class="nav-link" href="/emp/testimonial/viewtesti">Testi_list</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/about">About</a>
@@ -29,7 +29,7 @@
         {% else %}
         <button class="btn btn-outline-success me-4" style="min-width: 100px;">{{user.username}}</button>
           <li class="nav-item">
-            <a class="btn btn-danger me-5" href="/mylogout/">Logout</a>
+            <a class="btn btn-danger me-5" href="/mylogout/{{ request.build_absolute_uri }}">Logout</a>
           </li>
         {% endif %}
       </ul>
