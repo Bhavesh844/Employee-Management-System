@@ -9,8 +9,10 @@ from django.contrib import messages
 
 # @login_required(login_url='/protected_page')
 def emp_list(request):
+    sup = request.user.is_superuser
+    print(sup)
     emps=emp.objects.all() 
-    return render(request,'emp/home.html',{'emps':emps})
+    return render(request,'emp/home.html',{'emps':emps,'sup':sup})
 
 
 @login_required(login_url='/protected_page')
@@ -36,9 +38,10 @@ def add_emp(request):
     return render(request,'emp/add_emp.html')
     
 @login_required(login_url='/protected_page')
-def delete_emp(eid):
-    empp=emp.objects.get(pk=eid)
-    empp.delete()
+def delete_emp(request,eid):
+    if request.user.is_superuser:    
+        empp=emp.objects.get(pk=eid)
+        empp.delete()
     return redirect('/emp/home')
     
 @login_required(login_url='/protected_page')
