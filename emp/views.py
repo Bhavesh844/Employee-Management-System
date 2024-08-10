@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,Http404,FileResponse
 from emp.models import emp,Testimonial
 from django.contrib.auth.decorators import login_required
-import os
+from django.contrib import messages
 
 
 # Create your views here.
@@ -10,10 +10,7 @@ import os
 # @login_required(login_url='/protected_page')
 def emp_list(request):
     emps=emp.objects.all() 
-    data={
-        'emps':emps
-    }
-    return render(request,'emp/home.html',data)
+    return render(request,'emp/home.html',{'emps':emps})
 
 
 @login_required(login_url='/protected_page')
@@ -45,11 +42,12 @@ def delete_emp(eid):
     return redirect('/emp/home')
     
 @login_required(login_url='/protected_page')
-def update_emp(request,eid):
-    ee=emp.objects.get(pk=eid)
-    return render(request,'emp/update_emp.html',{
-        'e':ee
-    })
+def update_emp(request,eid,):
+    if request.user.is_superuser:    
+        ee=emp.objects.get(pk=eid)
+        return render(request,'emp/update_emp.html',{ 'e':ee})
+    return redirect('home')
+        
     
 @login_required(login_url='/protected_page')
 def testimonial(request):
@@ -62,7 +60,7 @@ def testimonial(request):
         T.save()
     return render(request,'testimonial/home.html',{})
 
-# @login_required(login_url='/protected_page')
+@login_required(login_url='/protected_page')
 def viewtesti(request):
     li=Testimonial.objects.all()
     # lilist=[i.name for i in li.first()._meta.get_fields()]

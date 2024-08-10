@@ -1,16 +1,19 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from emp.views import update_emp
 
 # Create your views here.
+
 
 def signin(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        print(user) 
-        if user is not None:
+        update_emp(user)
+        # print(user.is_superuser)
+        if user is not None: 
             login(request, user)
             return redirect('/emp/home')
         else: 

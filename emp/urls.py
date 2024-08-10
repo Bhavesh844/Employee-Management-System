@@ -18,7 +18,7 @@ from django.urls import path
 from emp import views
 
 urlpatterns = [
-    path('home/',views.emp_list),
+    path('home/',views.emp_list,name='home'),
     path('add-emp/',views.add_emp),
     path('delete-emp/<str:eid>',views.delete_emp),
     path('update-emp/<str:eid>',views.update_emp),
